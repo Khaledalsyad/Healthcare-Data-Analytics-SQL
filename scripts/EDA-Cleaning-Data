@@ -1,0 +1,175 @@
+/*
+===============================================================================
+Script Name: Egyptian_Doctors_and_Patient_Data_Processing.sql
+===============================================================================
+Script Purpose:
+    This script handles the creation, loading, and transformation of 
+    healthcare data related to Egyptian doctors and patients.
+
+Main Actions:
+    1. Drop and recreate raw (bronze) tables in the 'dbo' schema.
+    2. Bulk insert raw doctor data from CSV files.
+    3. Create cleaned (silver) versions of doctor and patient tables.
+    4. Apply transformations to remove unwanted characters, fix text fields, 
+       and handle missing values.
+    5. Prepare the data for further analytics in the Silver layer.
+
+Execution Notes:
+    - Ensure the 'silver' schema exists before running this script.
+    - Verify the file path for the CSV data source is correct.
+    - Run this script before performing aggregation or reporting in Gold layer.
+
+Author: Khaled Alsyad  
+Date: 2025-10-30  
+===============================================================================
+*/
+if object_id('dbo.Egyptian_Doctors_Data', 'U') is not null
+	drop table dbo.Egyptian_Doctors_Data
+create table dbo.Egyptian_Doctors_Data(
+Source                varchar(100),
+web_scraper_order     varchar(100),
+specialization        varchar(100),
+fees                  varchar(100),
+avg_rate              varchar(max),
+waiting_time          varchar(100),
+clinic_location       varchar(200),
+rate_count            varchar(100),
+doctor_views          varchar(50),
+pages                 varchar(100)
+)
+
+
+bulk insert dbo.Egyptian_Doctors_Data
+from 'C:\Users\Administrator\Desktop\SQL\sql-data-analytics-project2\datasets\Egyptian Doctors Data.csv'
+with (
+firstrow = 2,
+fieldterminator = ',',
+tablock
+)
+
+/*==================================================*/
+if object_id('silver.Egyptian_Doctors_Data', 'U') is not null
+	drop table silver.Egyptian_Doctors_Data
+create table silver.Egyptian_Doctors_Data(
+Source                varchar(100),
+web_scraper_order     varchar(100),
+specialization        varchar(100),
+fees                  varchar(100),
+avg_rate              varchar(max),
+waiting_time          varchar(100),
+clinic_location       varchar(200),
+rate_count            varchar(100),
+doctor_views          varchar(50),
+pages                 varchar(100)
+) 
+------------------------------------------
+truncate table silver.Egyptian_Doctors_Data
+insert into silver.Egyptian_Doctors_Data(
+Source,
+web_scraper_order,
+specialization,
+fees,
+avg_rate,
+waiting_time,
+clinic_location,
+rate_count,
+doctor_views,
+pages
+)
+select 
+REPLACE(Source, '(1)', '') Source,
+TRIM(web_scraper_order) web_scraper_order, 
+TRIM(specialization) specialization,
+REPLACE(fees, 'EGP', '') fees,
+ISNULL(avg_rate, 0) avg_rate,
+case when LEN(waiting_time) > 10 then SUBSTRING(waiting_time, 16, LEN(waiting_time))
+when LEN(waiting_time) = 'NULL' then 'NULL'
+else 'NULL'
+end waiting_time,
+TRIM(case when clinic_location  like '"%' then SUBSTRING(clinic_location, 2, LEN(clinic_location))
+else clinic_location 
+end )clinic_location,
+case 
+when LEN(rate_count) > 10 then TRIM(REPLACE(rate_count, 'From', ''))
+when LEN(rate_count) = 'Null' then 'NULL'
+else 'NULL'
+end rate_count,
+case when doctor_views  like '"%' then SUBSTRING(doctor_views, 2, LEN(doctor_views))
+when doctor_views like 'From%' then SUBSTRING(doctor_views, 5, LEN(doctor_views))
+when doctor_views like '%View(s)' then substring(doctor_views, 1, 4)
+when doctor_views like '%Visitors' then substring(doctor_views, 1, 3)
+else 'NULL'
+end doctor_views,
+pages
+from dbo.Egyptian_Doctors_Data
+
+select *
+from silver.Egyptian_Doctors_Data
+
+
+/*
+update dbo.Egyptian_Doctors_Data
+set waiting_time = 
+	case 
+	when waiting_time like '%Hours%and%Minutes%' then
+	cast(SUBSTRING(waiting_time, CHARINDEX(':', waiting_time) + 1,
+	CHARINDEX('Hours', waiting_time) - CHARINDEX(':', waiting_time) - 1)
+	as int) * 60 +
+	CAST(SUBSTRING(waiting_time, CHARINDEX('and', waiting_time) +3,
+	CHARINDEX('Minutes', waiting_time) - CHARINDEX('and', waiting_time) -3)
+	as int)
+	when waiting_time like '%Hours%' and waiting_time not like '%Minutes%' then
+	cast(SUBSTRING(waiting_time, CHARINDEX(':', waiting_time) + 1,
+	CHARINDEX('Hours', waiting_time) - CHARINDEX(':', waiting_time) - 1)
+	as int) * 60 
+
+	when waiting_time like '%Minutes%' and waiting_time not like '%Hours%' then
+	cast(SUBSTRING(waiting_time, CHARINDEX(':', waiting_time) + 1,
+	CHARINDEX('Hours', waiting_time) - CHARINDEX(':', waiting_time) - 1)
+	as int)
+	else NULL
+	end waiting_time */
+
+
+--update dbo.Egyptian_Doctors_Data
+--set pages = TRIM(REPLACE(REPLACE(pages, '"', ''), ',', ''))
+--where pages is not null
+
+--update dbo.Egyptian_Doctors_Data
+--set pages = LEFT(pages, CHARINDEX('View', pages) - 1)
+--where pages like '%View(s)%'
+
+
+--update dbo.Egyptian_Doctors_Data
+--set pages = null
+--where ISNUMERIC(pages) = 0 or CAST(pages as int) > 100
+
+
+
+/*=====================================================*/
+
+select *
+from dbo.pationt_data
+
+if object_id('silver.pationt_data', 'U') is not null
+	drop table silver.pationt_data
+create table silver.pationt_data(
+Customer_Index varchar(max),
+Transport varchar(max),
+Distance varchar(max),
+Time_Taken varchar(max),
+Family_Members varchar(max),
+Current_Occupation varchar(max)
+)
+
+
+insert into silver.pationt_data(
+Customer_Index ,
+Transport ,
+Distance ,
+Time_Taken,
+Family_Members ,
+Current_Occupation
+)
+select *
+from dbo.pationt_data
