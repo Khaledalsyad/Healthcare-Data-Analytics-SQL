@@ -1,0 +1,102 @@
+Customer Index,Transport,Distance,Time Taken,Family Members,Current Occupation 
+1,Bike,3.1To5 kms,16-30 minutes,4,Self Employed
+2,Bike,3.1To5 kms,16-30 minutes,4,Self Employed
+3,Bike,2.1 kmsTo3 kms,11-15 minutes,5,Student
+4,Bike,2.1 kmsTo3 kms,16-30 minutes,4,Student
+5,Bike,More than 10 kms,16-30 minutes,4,Student
+6,Bike,More than 10 kms,31-60 minutes,4,Self Employed
+7,Walk,Within 1 km,5-10 minutes,5,Self Employed
+8,Walk,Within 1 km,5-10 minutes,7,Business
+9,Bike,Within 1 km,Less than 5 minutes,4,Service
+10,Bike,3.1To5 kms,16-30 minutes,4,Student
+11,Bike,3.1To5 kms,16-30 minutes,4,Self Employed
+12,Bike,3.1To5 kms,11-15 minutes,5,Self Employed
+13,Bike,3.1To5 kms,16-30 minutes,5,Self Employed
+14,Bike,3.1To5 kms,31-60 minutes,5,Self Employed
+15,Bike,3.1To5 kms,16-30 minutes,4,Student
+16,Bus,More than 10 kms,61-90 minutes,4,Self Employed
+17,Bike,2.1 kmsTo3 kms,11-15 minutes,4,Self Employed
+18,Bike,3.1To5 kms,16-30 minutes,4,Self Employed
+19,Bike,More than 10 kms,31-60 minutes,4,Self Employed
+20,Bike,3.1To5 kms,16-30 minutes,4,Self Employed
+21,Bike,5.1-10 kms,16-30 minutes,4,Student
+22,Bike,3.1To5 kms,16-30 minutes,4,Student
+23,Bike,2.1 kmsTo3 kms,11-15 minutes,4,Self Employed
+24,Bike,5.1-10 kms,16-30 minutes,5,Student
+25,Bike,2.1 kmsTo3 kms,16-30 minutes,4,Student
+26,Bike,Within 1 km,5-10 minutes,4,Service
+27,Bike,3.1To5 kms,5-10 minutes,6,Student
+28,Bike,5.1-10 kms,16-30 minutes,5,Business
+29,Bike,2.1 kmsTo3 kms,16-30 minutes,3,Self Employed
+30,Bike,2.1 kmsTo3 kms,11-15 minutes,5,Student
+31,Bike,5.1-10 kms,16-30 minutes,5,Self Employed
+32,Bike,3.1To5 kms,16-30 minutes,4,Student
+33,Bike,5.1-10 kms,31-60 minutes,4,Student
+34,Bike,3.1To5 kms,11-15 minutes,4,Student
+35,Bike,5.1-10 kms,16-30 minutes,5,Self Employed
+36,Walk,Within 1 km,5-10 minutes,4,Student
+37,Bike,2.1 kmsTo3 kms,11-15 minutes,4,Self Employed
+38,Auto rickshaw / Cab,3.1To5 kms,16-30 minutes,4,Self Employed
+39,Bike,1 kmTo2kms,5-10 minutes,2,Self Employed
+40,Bike,5.1-10 kms,16-30 minutes,6,Self Employed
+41,Bike,3.1To5 kms,16-30 minutes,6,Student
+42,Walk,Within 1 km,Less than 5 minutes,5,Business
+43,Bike,3.1To5 kms,31-60 minutes,4,Self Employed
+44,Bike,3.1To5 kms,16-30 minutes,4,Self Employed
+45,Bike,More than 10 kms,61-90 minutes,4,Service
+46,Bike,2.1 kmsTo3 kms,16-30 minutes,3,Service
+47,Bike,3.1To5 kms,16-30 minutes,6,Self Employed
+48,Bus,2.1 kmsTo3 kms,16-30 minutes,6,Student
+49,Bike,3.1To5 kms,11-15 minutes,4,Self Employed
+50,Bike,3.1To5 kms,16-30 minutes,4,Self Employed
+51,Bike,More than 10 kms,16-30 minutes,5,Self Employed
+52,Bike,5.1-10 kms,16-30 minutes,4,Self Employed
+53,Walk,Within 1 km,Less than 5 minutes,4,Student
+54,Auto rickshaw / Cab,Within 1 km,5-10 minutes,4,Student
+55,Bus,2.1 kmsTo3 kms,16-30 minutes,4,Student
+56,Bike,5.1-10 kms,16-30 minutes,4,Business
+57,Bike,2.1 kmsTo3 kms,11-15 minutes,3,Business
+58,Bus,More than 10 kms,More than 90 minutes,10 or more,Business
+59,Walk,2.1 kmsTo3 kms,16-30 minutes,4,Business
+60,Bike,1 kmTo2kms,16-30 minutes,10 or more,Self Employed
+61,Walk,Within 1 km,Less than 5 minutes,4,Self Employed
+62,Bike,5.1-10 kms,16-30 minutes,6,Self Employed
+63,Bike,2.1 kmsTo3 kms,5-10 minutes,4,Business
+64,Bike,More than 10 kms,More than 90 minutes,6,Self Employed
+65,Bike,5.1-10 kms,16-30 minutes,4,Business
+66,Bike,1 kmTo2kms,5-10 minutes,5,Service
+67,Car,5.1-10 kms,16-30 minutes,4,Self Employed
+68,Bike,2.1 kmsTo3 kms,11-15 minutes,5,Self Employed
+69,Bike,3.1To5 kms,11-15 minutes,4,Self Employed
+70,Bike,More than 10 kms,More than 90 minutes,4,Self Employed
+71,Bike,5.1-10 kms,16-30 minutes,4,Student
+72,Bike,5.1-10 kms,16-30 minutes,5,Student
+73,Bike,1 kmTo2kms,5-10 minutes,3,Self Employed
+74,Bike,3.1To5 kms,11-15 minutes,4,Self Employed
+75,Bike,3.1To5 kms,16-30 minutes,4,Student
+76,Bus,2.1 kmsTo3 kms,16-30 minutes,3,Student
+77,Car,3.1To5 kms,16-30 minutes,5,Self Employed
+78,Bike,5.1-10 kms,16-30 minutes,5,Self Employed
+79,Auto rickshaw / Cab,More than 10 kms,More than 90 minutes,4,Student
+80,Bike,5.1-10 kms,16-30 minutes,4,Student
+81,Bus,2.1 kmsTo3 kms,11-15 minutes,4,Self Employed
+82,Bike,5.1-10 kms,16-30 minutes,4,Student
+83,Bike,5.1-10 kms,16-30 minutes,4,Student
+84,Bike,More than 10 kms,More than 90 minutes,2,Self Employed
+85,Bike,5.1-10 kms,16-30 minutes,4,Student
+86,Auto rickshaw / Cab,3.1To5 kms,11-15 minutes,3,Student
+87,Car,More than 10 kms,61-90 minutes,7,Business
+88,Bike,5.1-10 kms,16-30 minutes,5,Self Employed
+89,Car,2.1 kmsTo3 kms,16-30 minutes,3,Business
+90,Auto rickshaw / Cab,5.1-10 kms,16-30 minutes,5,Student
+91,Bike,2.1 kmsTo3 kms,16-30 minutes,4,Student
+92,Bike,2.1 kmsTo3 kms,5-10 minutes,5,Self Employed
+93,Bike,More than 10 kms,61-90 minutes,4,Student
+94,Bike,More than 10 kms,31-60 minutes,4,Housewife / Homemaker (Not formally employed)
+95,Walk,Within 1 km,11-15 minutes,4,Self Employed
+96,Walk,Within 1 km,16-30 minutes,3,Student
+97,Bike,2.1 kmsTo3 kms,11-15 minutes,4,Self Employed
+98,Bike,1 kmTo2kms,11-15 minutes,4,Student
+99,Bike,2.1 kmsTo3 kms,11-15 minutes,4,Self Employed
+,,,,,
+,,,,,
