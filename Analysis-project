@@ -1,0 +1,129 @@
+/*
+===============================================================================
+Script Name: Healthcare_Data_Analytics_Descriptive_Analysis.sql
+===============================================================================
+Script Purpose:
+    This script performs descriptive analysis on healthcare datasets 
+    from the Silver layer, including doctors, cancer cases, and patient data.
+
+Main Actions:
+    1. Analyze Egyptian doctors' data:
+        - Count total doctors per specialization and clinic location.
+        - Calculate average fees, ratings, and review counts.
+        - Identify top 10 specializations by doctor views.
+    2. Analyze cancer dataset:
+        - Count cases by cancer type.
+        - Calculate recovery rates per treatment type.
+        - Compute average, minimum, and maximum patient age per cancer type.
+    3. Analyze patient dataset:
+        - Calculate average distance and time taken to reach healthcare centers.
+        - Examine recovery rates by proximity category (NEAR, MIDUME, FAR).
+        - Summarize cancer outcomes by emirate with travel data.
+
+Execution Notes:
+    - Run after the Silver layer tables are created and cleaned.
+    - Ensure all referenced tables exist in the 'silver' schema.
+    - Use this analysis to generate summary statistics and insights 
+      for visualization or reporting.
+
+Author: Khaled Alsyad  
+Date: 2025-10-30  
+===============================================================================
+*/
+
+
+select 
+COUNT(*)total_doctors ,
+specialization, 
+clinic_location,
+AVG(TRY_CAST(fees as int)) avg_fees,
+AVG(TRY_CAST(avg_rate as int)) avg_rate,
+AVG(TRY_CAST(rate_count as float)) rate_count
+from silver.Egyptian_Doctors_Data
+where avg_rate is not null
+group by specialization, clinic_location
+/*==================================================*/
+select top 10
+Source,
+specialization,
+sum(TRY_CAST(doctor_views as int)) doctor_views,
+Sum(TRY_CAST(avg_rate as int)) avg_rate
+from silver.Egyptian_Doctors_Data
+group by specialization, Source
+order by doctor_views desc
+
+/*=============================================*/
+--CANCER TABLE
+select 
+Cancer_Type,
+COUNT(*)total_cancer,
+CONCAT(ROUND(COUNT(*) * 100 / (SELECT count(*) FROM silver.cancer_dataset_uae where Cancer_Type is not null), 2), '%') Cancer_Type_pirsentg
+from silver.cancer_dataset_uae
+group by Cancer_Type
+
+/*==================================================*/
+
+select 
+Treatment_Type,
+COUNT(*) total_cancer,
+sum(case when Outcome = 'Recovered' then 1  else 0 end) Outcome_recovered,
+CONCAT(ROUND(sum(case when Outcome = 'Recovered' then 1  else 0 end) * 100 / COUNT(*), 2), '%') Outcome_persintg
+from silver.cancer_dataset_uae
+group by Treatment_Type
+
+/*==================================================*/
+
+select 
+Cancer_Type,
+round(AVG(Age), 2) avg_age,
+MIN(Age) first_age,
+max(Age) last_age
+from silver.cancer_dataset_uae
+where Age is not null and Cancer_Type is not null
+group by Cancer_Type
+order by avg_age 
+
+/*==================================================*/
+
+SELECT 
+COUNT(*) total_pation ,
+AVG(TRY_CAST(Distance as int)) Avg_Distanse,
+AVG(TRY_CAST(Time_Taken as int)) Avg_Time_Taken
+FROM silver.pationt_data
+WHERE AVG(TRY_CAST(Distance as int)) IS NOT NULL
+AND AVG(TRY_CAST(Time_Taken as int)) IS NOT NULL
+
+/*==================================================*/
+SELECT 
+CASE WHEN TRY_CAST(P.Distance AS INT) <= 10 THEN 'NEER'
+WHEN TRY_CAST(P.Distance AS INT) BETWEEN 5 AND 15 THEN 'MIDUME'
+ELSE 'FAR'
+END Distance, 
+COUNT(*),
+SUM(CASE WHEN Outcome = 'Recovered' then 1 else 0 end) Outcome,
+CONCAT(ROUND(SUM(CASE WHEN Outcome = 'Recovered' then 1 else 0 end) * 100 / (COUNT(*)), 2), '%')
+FROM silver.pationt_data P
+LEFT JOIN silver.cancer_dataset_uae S
+ON P.Customer_Index = S.Patient_ID
+GROUP BY 
+CASE WHEN TRY_CAST(P.Distance AS INT) <= 10 THEN 'NEER'
+WHEN TRY_CAST(P.Distance AS INT) BETWEEN 5 AND 15 THEN 'MIDUME'
+ELSE 'FAR'
+END 
+
+/*==================================================*/
+
+SELECT 
+S.Emirate,
+COUNT(*) total_cancer,
+SUM(CASE WHEN S.Outcome = 'Recovered' then 1 else 0 end) Outcome_pirsintg,
+AVG(TRY_CAST(D.Distance AS float)) Distance_PERSINTG,
+AVG(TRY_CAST(D.Time_Taken AS float)) TIME_PERSINTG
+FROM silver.cancer_dataset_uae S
+left JOIN silver.pationt_data D
+ON S.Patient_ID = D.Customer_Index
+GROUP BY S.Emirate
+
+
+
+
